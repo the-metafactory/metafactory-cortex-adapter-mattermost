@@ -179,3 +179,11 @@ export const mattermostAdapterPlugin: AdapterPlugin = {
     );
   },
 };
+
+// cortex#1796 (S11 MOVE) — this bundle's `cortex-plugin.yaml` declares
+// `kind: adapter`, `id: mattermost`, `entry: ./src/plugin.ts`, `sdkRange: "^1"`.
+// The default export IS the `SurfacePlugin` (ADR-0024 D1: "sdkRange in its
+// default-exported SurfacePlugin") — cortex's S6 loader reads
+// `defaultExport.sdkRange` at `import()` time to gate compatibility.
+// Mirrors `metafactory-cortex-adapter-web`'s `src/plugin.ts` default export.
+export default { ...mattermostAdapterPlugin, sdkRange: "^1" as const };
